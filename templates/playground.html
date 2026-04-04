@@ -9,8 +9,111 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>PhysicsKit Playground</h1>
-    <p>Coming soon.</p>
+    <div class="app">
+        <header class="app-header">
+            <h1 class="app-title">PhysicsKit</h1>
+            <p class="app-tagline">Physics API playground</p>
+        </header>
+
+        <nav class="tab-bar" role="tablist" aria-label="Visualization panels">
+            <button type="button" class="tab tab-active" role="tab" aria-selected="true" aria-controls="panel-chaos" id="tab-chaos" data-panel="chaos">CHAOS LAB</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-projectile" id="tab-projectile" data-panel="projectile">PROJECTILE</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-doppler" id="tab-doppler" data-panel="doppler">DOPPLER</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-time" id="tab-time" data-panel="time">TIME DILATION</button>
+        </nav>
+
+        <main class="panels">
+            <section class="panel panel-active" id="panel-chaos" role="tabpanel" aria-labelledby="tab-chaos" aria-hidden="false">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-chaos" class="viz-canvas" width="600" height="500" aria-label="Double pendulum visualization"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <label class="control-label" for="chaos-theta1">theta1 (deg)</label>
+                            <input type="range" id="chaos-theta1" class="control-range" min="-180" max="180" value="120" step="1">
+                            <span class="control-value mono" id="chaos-theta1-val">120</span>
+                            <label class="control-label" for="chaos-theta2">theta2 (deg)</label>
+                            <input type="range" id="chaos-theta2" class="control-range" min="-180" max="180" value="120" step="1">
+                            <span class="control-value mono" id="chaos-theta2-val">120</span>
+                            <label class="control-label" for="chaos-duration">duration (s)</label>
+                            <input type="range" id="chaos-duration" class="control-range" min="1" max="30" value="15" step="0.5">
+                            <span class="control-value mono" id="chaos-duration-val">15</span>
+                            <label class="control-row compare-row">
+                                <input type="checkbox" id="chaos-compare">
+                                <span>Compare mode</span>
+                            </label>
+                            <button type="button" class="btn-primary" id="chaos-run">Run simulation</button>
+                        </div>
+                        <div class="output-panel" id="chaos-output">
+                            <div class="output-status mono" id="chaos-status">Loading simulation…</div>
+                            <div class="key-stats" id="chaos-key-stats"></div>
+                            <p class="context-block" id="chaos-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="chaos-json"></pre>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-projectile" role="tabpanel" aria-labelledby="tab-projectile" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-projectile" class="viz-canvas" width="600" height="500" aria-label="Projectile range visualization"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <p class="placeholder-text">Projectile controls and live arc update ship in Phase 3C.</p>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono">Phase 3C</div>
+                            <p class="context-block muted">Open the CHAOS LAB tab for the live demo, or return after the next phase for projectile, Doppler, and time dilation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-doppler" role="tabpanel" aria-labelledby="tab-doppler" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-doppler" class="viz-canvas" width="600" height="500" aria-label="Doppler wave scene"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <p class="placeholder-text">Doppler controls and wave animation ship in Phase 3C.</p>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono">Phase 3C</div>
+                            <p class="context-block muted">Wave scene visualization will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-time" role="tabpanel" aria-labelledby="tab-time" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-time" class="viz-canvas" width="600" height="500" aria-label="Time dilation clocks"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <p class="placeholder-text">Velocity slider and clock rendering ship in Phase 3C.</p>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono">Phase 3C</div>
+                            <p class="context-block muted">Analog clocks and dilation output will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
     <script src="/static/playground.js"></script>
 </body>
 </html>
