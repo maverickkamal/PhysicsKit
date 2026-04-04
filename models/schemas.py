@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field
-from typing import Optional
 
 
 class Vector2D(BaseModel):
@@ -16,7 +15,7 @@ class DoublePendulumRequest(BaseModel):
     length2: float = Field(1.0, description="Length of second pendulum arm (m)", gt=0)
     mass1: float = Field(1.0, description="Mass of first bob (kg)", gt=0)
     mass2: float = Field(1.0, description="Mass of second bob (kg)", gt=0)
-    duration: float = Field(10.0, description="Simulation duration (s)", gt=0, le=30.0)
+    duration: float = Field(10.0, description="Simulation duration (s), max 30", gt=0)
     compare_mode: bool = Field(False, description="Run a second simulation with theta1 offset by 0.001 degrees")
 
 

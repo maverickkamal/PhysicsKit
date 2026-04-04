@@ -317,6 +317,18 @@ def run_double_pendulum(theta1: float, theta2: float, omega1: float = 0.0, omega
     }
 
 
+def bob2_divergence_time_seconds(trajectory2_a: list, trajectory2_b: list, threshold_m: float = 0.1) -> float | None:
+    n = min(len(trajectory2_a), len(trajectory2_b))
+    for i in range(n):
+        a = trajectory2_a[i]
+        b = trajectory2_b[i]
+        dx = float(a["x"]) - float(b["x"])
+        dy = float(a["y"]) - float(b["y"])
+        if math.hypot(dx, dy) > threshold_m:
+            return float(a["t"])
+    return None
+
+
 def _pendulum_energy(state, L1, L2, m1, m2, g=9.81):
     th1, th2, w1, w2 = state
     T = (0.5 * (m1 + m2) * L1**2 * w1**2
