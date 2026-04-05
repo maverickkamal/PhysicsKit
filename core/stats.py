@@ -1,9 +1,17 @@
 import json
 import asyncio
+import os
 from pathlib import Path
 from datetime import datetime, timezone
 
-STATS_FILE = Path(__file__).resolve().parent.parent / "stats.json"
+
+def _stats_file() -> Path:
+    env = os.environ.get("STATS_FILE", "").strip()
+    if env:
+        p = Path(env).expanduser()
+        p.parent.mkdir(parents=True, exist_ok=True)
+        return p.resolve()
+    return Path(__file__).resolve().parent.parent / "stats.json"
 
 _defaults = {
     "total_requests": 0,
@@ -27,8 +35,9 @@ def _derive_most_queried(by_endpoint: dict[str, int]) -> str | None:
 
 def load() -> dict:
     global _cache
-    if STATS_FILE.exists():
-        with open(STATS_FILE, "r") as f:
+    path = _stats_file()
+    if path.exists():
+        with open(path, "r") as f:
             _cache = json.load(f)
     else:
         _cache = {**_defaults}
@@ -37,7 +46,7 @@ def load() -> dict:
 
 
 def _write_sync(data: dict) -> None:
-    with open(STATS_FILE, "w") as f:
+    with open(_stats_file(), "w") as f:
         json.dump(data, f, indent=2)
 
 

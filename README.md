@@ -59,4 +59,14 @@ uvicorn main:app --reload
 
 Open `http://localhost:8000/playground` — the chaos lab animates immediately.
 
+### Deploy on Railway
+
+1. Push this repo to GitHub. In [Railway](https://railway.app), **New Project → Deploy from GitHub** and select the repo.
+2. Railway detects Python via `requirements.txt` and uses the **`Procfile`** to run Uvicorn on `$PORT`.
+3. **Persistent stats:** In the service, open **Settings → Volumes → Add volume**. Set the mount path to **`/data`** (or another path you prefer).
+4. In **Variables**, add **`STATS_FILE`** = **`/data/stats.json`** (must match the mount path + filename).
+5. Generate a public URL (**Settings → Networking → Generate domain**) or attach your custom domain.
+
+Locally, omit `STATS_FILE` to keep using `./stats.json` in the project root.
+
 *AI contributed to the readme*
