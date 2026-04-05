@@ -20,6 +20,10 @@
             <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-projectile" id="tab-projectile" data-panel="projectile">PROJECTILE</button>
             <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-doppler" id="tab-doppler" data-panel="doppler">DOPPLER</button>
             <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-time" id="tab-time" data-panel="time">TIME DILATION</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-escape" id="tab-escape" data-panel="escape">ESCAPE VEL</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-interference" id="tab-interference" data-panel="interference">WAVES</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-gaslaw" id="tab-gaslaw" data-panel="gaslaw">GAS LAW</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-collision" id="tab-collision" data-panel="collision">COLLISION</button>
         </nav>
 
         <main class="panels">
@@ -174,6 +178,148 @@
                             <details class="json-details">
                                 <summary class="json-summary">Raw JSON response</summary>
                                 <pre class="json-pre mono" id="time-json"></pre>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-escape" role="tabpanel" aria-labelledby="tab-escape" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-escape" class="viz-canvas" width="600" height="500" aria-label="Escape velocity comparison"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <label class="control-label" for="esc-body">Celestial body</label>
+                            <select id="esc-body" class="control-select">
+                                <option value="earth" selected>Earth</option>
+                                <option value="moon">Moon</option>
+                                <option value="mars">Mars</option>
+                                <option value="jupiter">Jupiter</option>
+                                <option value="sun">Sun</option>
+                            </select>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono" id="esc-status">Loading…</div>
+                            <div class="key-stats" id="esc-key-stats"></div>
+                            <p class="context-block" id="esc-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="esc-json"></pre>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-interference" role="tabpanel" aria-labelledby="tab-interference" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-interference" class="viz-canvas" width="600" height="500" aria-label="Wave interference pattern"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <label class="control-label" for="int-freq1">frequency 1</label>
+                            <input type="range" id="int-freq1" class="control-range" min="1" max="20" value="5" step="0.5">
+                            <span class="control-value mono" id="int-freq1-val">5.0</span>
+                            <label class="control-label" for="int-freq2">frequency 2</label>
+                            <input type="range" id="int-freq2" class="control-range" min="1" max="20" value="6" step="0.5">
+                            <span class="control-value mono" id="int-freq2-val">6.0</span>
+                            <label class="control-label" for="int-amp1">amplitude 1</label>
+                            <input type="range" id="int-amp1" class="control-range" min="0.1" max="2" value="1" step="0.1">
+                            <span class="control-value mono" id="int-amp1-val">1.0</span>
+                            <label class="control-label" for="int-amp2">amplitude 2</label>
+                            <input type="range" id="int-amp2" class="control-range" min="0.1" max="2" value="1" step="0.1">
+                            <span class="control-value mono" id="int-amp2-val">1.0</span>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono" id="int-status">Loading…</div>
+                            <div class="key-stats" id="int-key-stats"></div>
+                            <p class="context-block" id="int-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="int-json"></pre>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-gaslaw" role="tabpanel" aria-labelledby="tab-gaslaw" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-gaslaw" class="viz-canvas" width="600" height="500" aria-label="Ideal gas law visualization"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <label class="control-label" for="gas-solve">Solve for</label>
+                            <select id="gas-solve" class="control-select">
+                                <option value="P" selected>Pressure (P)</option>
+                                <option value="V">Volume (V)</option>
+                                <option value="n">Moles (n)</option>
+                                <option value="T">Temperature (T)</option>
+                            </select>
+                            <label class="control-label" for="gas-pressure">Pressure (Pa)</label>
+                            <input type="number" id="gas-pressure" class="control-number" min="0" step="any" value="" placeholder="unknown">
+                            <label class="control-label" for="gas-volume">Volume (m&sup3;)</label>
+                            <input type="number" id="gas-volume" class="control-number" min="0" step="any" value="0.0224">
+                            <label class="control-label" for="gas-moles">Moles (mol)</label>
+                            <input type="number" id="gas-moles" class="control-number" min="0" step="any" value="1">
+                            <label class="control-label" for="gas-temp">Temperature (K)</label>
+                            <input type="number" id="gas-temp" class="control-number" min="0" step="any" value="273.15">
+                            <button type="button" class="btn-primary" id="gas-run">Calculate</button>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono" id="gas-status">Ready</div>
+                            <div class="key-stats" id="gas-key-stats"></div>
+                            <p class="context-block" id="gas-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="gas-json"></pre>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-collision" role="tabpanel" aria-labelledby="tab-collision" aria-hidden="true">
+                <div class="viz-layout">
+                    <div class="canvas-wrap">
+                        <canvas id="canvas-collision" class="viz-canvas" width="600" height="500" aria-label="2D collision visualization"></canvas>
+                    </div>
+                    <div class="side-panel">
+                        <div class="controls">
+                            <h2 class="panel-heading">Controls</h2>
+                            <label class="control-label" for="col-m1">mass 1 (kg)</label>
+                            <input type="range" id="col-m1" class="control-range" min="0.5" max="20" value="2" step="0.5">
+                            <span class="control-value mono" id="col-m1-val">2.0</span>
+                            <label class="control-label" for="col-m2">mass 2 (kg)</label>
+                            <input type="range" id="col-m2" class="control-range" min="0.5" max="20" value="1" step="0.5">
+                            <span class="control-value mono" id="col-m2-val">1.0</span>
+                            <label class="control-label" for="col-v1">velocity 1 (m/s, rightward)</label>
+                            <input type="range" id="col-v1" class="control-range" min="-10" max="10" value="3" step="0.5">
+                            <span class="control-value mono" id="col-v1-val">3.0</span>
+                            <label class="control-label" for="col-v2">velocity 2 (m/s, rightward)</label>
+                            <input type="range" id="col-v2" class="control-range" min="-10" max="10" value="-1" step="0.5">
+                            <span class="control-value mono" id="col-v2-val">-1.0</span>
+                            <label class="control-label" for="col-type">collision type</label>
+                            <select id="col-type" class="control-select">
+                                <option value="elastic" selected>Elastic</option>
+                                <option value="inelastic">Inelastic</option>
+                            </select>
+                            <button type="button" class="btn-primary" id="col-run">Run collision</button>
+                        </div>
+                        <div class="output-panel">
+                            <div class="output-status mono" id="col-status">Ready</div>
+                            <div class="key-stats" id="col-key-stats"></div>
+                            <p class="context-block" id="col-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="col-json"></pre>
                             </details>
                         </div>
                     </div>
