@@ -296,8 +296,6 @@
         }
     }
 
-    /* ---- PROJECTILE ---- */
-
     var planetNames = { "9.81": "Earth", "1.62": "Moon", "3.71": "Mars", "24.79": "Jupiter" };
 
     function projTransforms(data, cw, ch) {
@@ -455,8 +453,6 @@
         if (ht && qs("proj-height-val")) qs("proj-height-val").textContent = ht.value + " m";
     }
 
-    /* ---- DOPPLER (client-side animation) ---- */
-
     function drawDopplerClientFrame(canvas, anim) {
         if (!canvas) return;
         var ctx = canvas.getContext("2d"), cw = canvas.width, ch = canvas.height;
@@ -602,8 +598,6 @@
         if (v && qs("dop-src-vel-val")) qs("dop-src-vel-val").textContent = v.value + " m/s";
     }
 
-    /* ---- TIME DILATION ---- */
-
     function syncTimeBetaLabel() {
         var b = qs("time-beta");
         if (b && qs("time-beta-val")) {
@@ -741,8 +735,6 @@
         timeRafId = requestAnimationFrame(tick);
     }
 
-    /* ---- ESCAPE VELOCITY ---- */
-
     var escBodies = {
         earth:   { mass: 5.972e24, radius: 6.371e6, name: "Earth" },
         moon:    { mass: 7.342e22, radius: 1.737e6, name: "Moon" },
@@ -833,8 +825,6 @@
         var sel = qs("esc-body");
         if (sel) sel.addEventListener("change", fetchEscape);
     }
-
-    /* ---- WAVE INTERFERENCE ---- */
 
     function drawIntFrame(canvas, anim, nowSec) {
         if (!canvas) return;
@@ -985,8 +975,6 @@
             if (el) el.addEventListener("input", function () { syncIntLabels(); deb(); });
         });
     }
-
-    /* ---- GAS LAW ---- */
 
     function syncGasLawUI() {
         var sel = qs("gas-solve");
@@ -1230,8 +1218,6 @@
         if (btn) btn.addEventListener("click", fetchGasLaw);
     }
 
-    /* ---- COLLISION ---- */
-
     var colRafId = null;
     var colAnim = null;
 
@@ -1417,8 +1403,6 @@
         var btn = qs("col-run");
         if (btn) btn.addEventListener("click", fetchCollision);
     }
-
-    /* ---- BINDINGS ---- */
 
     function bindProjectile() {
         syncProjLabels();

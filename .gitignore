@@ -3,3 +3,4 @@ __pycache__
 .venv
 *_.md
 test_*.py
+stats.json
