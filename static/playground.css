@@ -368,3 +368,54 @@ body {
         flex-basis: 100%;
     }
 }
+
+@media (max-width: 480px) {
+    .app {
+        padding: 0.75rem 0.75rem 1.5rem;
+    }
+
+    .app-title {
+        font-size: 1.35rem;
+    }
+
+    .tab-bar {
+        gap: 0.25rem;
+    }
+
+    .tab {
+        font-size: 0.6rem;
+        padding: 0.45rem 0.55rem;
+        letter-spacing: 0.04em;
+    }
+
+    .panel-heading {
+        font-size: 0.78rem;
+    }
+
+    .controls {
+        padding: 0.75rem 0.85rem;
+    }
+
+    .control-label {
+        font-size: 0.72rem;
+    }
+
+    .control-number {
+        font-size: 0.75rem;
+        padding: 0.4rem;
+    }
+
+    .stat-pill {
+        font-size: 0.68rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .context-block {
+        font-size: 0.85rem;
+    }
+
+    .json-pre {
+        font-size: 0.6rem;
+        max-height: 150px;
+    }
+}

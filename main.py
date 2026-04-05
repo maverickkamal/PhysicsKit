@@ -42,7 +42,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/health", tags=["Meta"], summary="API health check")
+@app.get(
+    "/health",
+    tags=["Meta"],
+    summary="API health check",
+    description="Returns API status, uptime in seconds since server start, and version string. No parameters required.",
+)
 async def health():
     uptime = time.time() - _start_time
     return {
@@ -53,7 +58,15 @@ async def health():
     }
 
 
-@app.get("/stats", tags=["Meta"], summary="Persisted usage statistics")
+@app.get(
+    "/stats",
+    tags=["Meta"],
+    summary="Persisted usage statistics",
+    description=(
+        "Returns persisted usage statistics from stats.json. Includes total request count, "
+        "per-endpoint breakdowns, most queried domain, and the ISO timestamp of when the server started."
+    ),
+)
 async def get_stats():
     return stats.get_stats()
 
