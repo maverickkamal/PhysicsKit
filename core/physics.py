@@ -275,6 +275,8 @@ def run_double_pendulum(theta1: float, theta2: float, omega1: float = 0.0, omega
     num_points = min(int(duration * 100), 3000)
     t_eval = np.linspace(0, duration, num_points)
 
+    max_step = duration / num_points * 2 if num_points > 0 else 0.05
+
     sol = solve_ivp(
         double_pendulum_ode,
         [0, duration],
@@ -284,6 +286,7 @@ def run_double_pendulum(theta1: float, theta2: float, omega1: float = 0.0, omega
         t_eval=t_eval,
         rtol=1e-8,
         atol=1e-10,
+        max_step=max_step,
     )
 
     x1, y1, x2, y2 = _pendulum_positions(sol.y, L1, L2)
