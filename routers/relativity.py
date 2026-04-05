@@ -1,7 +1,9 @@
+import math
+
 from fastapi import APIRouter, Query, HTTPException
 
 from core import stats
-from core.physics import time_dilation
+from core.physics import time_dilation, C_LIGHT
 
 router = APIRouter(prefix="/relativity", tags=["Relativity"])
 
@@ -38,7 +40,21 @@ async def get_time_dilation(
         )
 
     v = velocity if velocity and velocity > 0 else None
+
+    if v is not None and v >= C_LIGHT:
+        raise HTTPException(
+            status_code=400,
+            detail=f"velocity must be less than the speed of light ({C_LIGHT:.0f} m/s).",
+        )
+
     gp = gravitational_potential
+    if gp is not None:
+        discriminant = 1 + 2 * gp / (C_LIGHT ** 2)
+        if discriminant <= 0:
+            raise HTTPException(
+                status_code=400,
+                detail="gravitational_potential is too extreme — places the observer at or inside the event horizon.",
+            )
 
     result = time_dilation(velocity=v, gravitational_potential=gp, proper_time=proper_time)
     await stats.record(EP_TIME)

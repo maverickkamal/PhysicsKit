@@ -26,6 +26,11 @@ async def get_doppler(
 ):
     if abs(medium_speed - source_velocity) < 1e-9:
         raise HTTPException(status_code=400, detail="medium_speed must differ from source_velocity (avoid division by zero).")
+    if source_velocity >= medium_speed:
+        raise HTTPException(
+            status_code=400,
+            detail=f"source_velocity ({source_velocity}) must be less than medium_speed ({medium_speed}). Supersonic sources produce a shock wave, not a Doppler shift.",
+        )
     result = doppler_frequency(source_freq, source_velocity, observer_velocity, medium_speed)
     await stats.record(EP_DOPPLER)
     return result

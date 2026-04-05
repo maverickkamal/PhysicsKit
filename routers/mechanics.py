@@ -21,7 +21,7 @@ EP_COLLISION = "/mechanics/collision"
 )
 async def get_projectile(
     velocity: float = Query(..., gt=0, description="Launch speed in m/s", examples=[50.0]),
-    angle: float = Query(..., description="Launch angle in degrees from horizontal", examples=[45.0]),
+    angle: float = Query(..., gt=0, lt=180, description="Launch angle in degrees from horizontal (0-180)", examples=[45.0]),
     height: float = Query(0.0, ge=0, description="Initial height in m", examples=[0.0]),
     gravity: float = Query(9.81, gt=0, description="Gravitational acceleration in m/s²", examples=[9.81]),
 ):

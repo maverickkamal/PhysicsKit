@@ -410,7 +410,14 @@
         return fetch(url)
             .then(function (res) { return res.json().then(function (d) { return { ok: res.ok, status: res.status, data: d }; }); })
             .then(function (out) {
-                if (!out.ok) { if (st) st.textContent = "Error " + out.status; if (cx) cx.innerHTML = formatContext(formatDetail(out.data)); return; }
+                if (!out.ok) {
+                    stopProjAnimation();
+                    if (st) st.textContent = "Error " + out.status;
+                    if (cx) cx.innerHTML = formatContext(formatDetail(out.data));
+                    if (js) js.textContent = JSON.stringify(out.data, null, 2);
+                    paintPlaceholder(qs("canvas-projectile"), "API error");
+                    return;
+                }
                 var d = out.data;
                 if (st) st.textContent = "Playing";
                 if (cx) cx.innerHTML = formatContext(d.context);
@@ -422,7 +429,11 @@
                 ]);
                 startProjAnimation(d);
             })
-            .catch(function () { if (st) st.textContent = "Network error"; });
+            .catch(function () {
+                stopProjAnimation();
+                if (st) st.textContent = "Network error";
+                paintPlaceholder(qs("canvas-projectile"), "Offline");
+            });
     }
 
     function syncProjLabels() {
@@ -546,7 +557,14 @@
         return fetch(url)
             .then(function (res) { return res.json().then(function (d) { return { ok: res.ok, status: res.status, data: d }; }); })
             .then(function (out) {
-                if (!out.ok) { stopDopplerAnimation(); if (st) st.textContent = "Error"; if (cx) cx.innerHTML = formatContext(formatDetail(out.data)); return; }
+                if (!out.ok) {
+                    stopDopplerAnimation();
+                    if (st) st.textContent = "Error " + out.status;
+                    if (cx) cx.innerHTML = formatContext(formatDetail(out.data));
+                    if (js) js.textContent = JSON.stringify(out.data, null, 2);
+                    paintPlaceholder(qs("canvas-doppler"), "API error");
+                    return;
+                }
                 var d = out.data;
                 if (st) st.textContent = "Animating";
                 if (cx) cx.innerHTML = formatContext(d.context);
@@ -559,7 +577,11 @@
                 ]);
                 startDopplerClientAnim(v, m, f, d.effect);
             })
-            .catch(function () { stopDopplerAnimation(); if (st) st.textContent = "Network error"; });
+            .catch(function () {
+                stopDopplerAnimation();
+                if (st) st.textContent = "Network error";
+                paintPlaceholder(qs("canvas-doppler"), "Offline");
+            });
     }
 
     function syncDopLabels() {
@@ -609,7 +631,13 @@
         return fetch(url)
             .then(function (res) { return res.json().then(function (d) { return { ok: res.ok, status: res.status, data: d }; }); })
             .then(function (out) {
-                if (!out.ok) { if (st) st.textContent = "Error"; if (cx) cx.innerHTML = formatContext(formatDetail(out.data)); return; }
+                if (!out.ok) {
+                    if (st) st.textContent = "Error " + out.status;
+                    if (cx) cx.innerHTML = formatContext(formatDetail(out.data));
+                    if (js) js.textContent = JSON.stringify(out.data, null, 2);
+                    paintPlaceholder(qs("canvas-time"), "API error");
+                    return;
+                }
                 var d = out.data;
                 var dil = Number(d.dilated_time);
                 timeClock.rateR = dil > 0 ? 1 / dil : 1;
@@ -624,7 +652,10 @@
                 ]);
                 if (timeRafId == null) startTimeClockLoop();
             })
-            .catch(function () { if (st) st.textContent = "Network error"; });
+            .catch(function () {
+                if (st) st.textContent = "Network error";
+                paintPlaceholder(qs("canvas-time"), "Offline");
+            });
     }
 
     var clockNums = ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
