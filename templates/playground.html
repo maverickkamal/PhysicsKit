@@ -25,16 +25,19 @@
         <main class="panels">
             <section class="panel panel-active" id="panel-chaos" role="tabpanel" aria-labelledby="tab-chaos" aria-hidden="false">
                 <div class="viz-layout">
-                    <div class="canvas-wrap">
-                        <canvas id="canvas-chaos" class="viz-canvas" width="600" height="500" aria-label="Double pendulum visualization"></canvas>
+                    <div class="canvas-wrap chaos-canvas-wrap">
+                        <div class="chaos-canvas-row" id="chaos-canvas-row">
+                            <canvas id="canvas-chaos-a" class="viz-canvas chaos-canvas" width="600" height="500" aria-label="Double pendulum main simulation"></canvas>
+                            <canvas id="canvas-chaos-b" class="viz-canvas chaos-canvas chaos-canvas-b" width="600" height="500" aria-hidden="true" aria-label="Double pendulum comparison simulation"></canvas>
+                        </div>
                     </div>
                     <div class="side-panel">
                         <div class="controls">
                             <h2 class="panel-heading">Controls</h2>
-                            <label class="control-label" for="chaos-theta1">theta1 (deg)</label>
+                            <label class="control-label" for="chaos-theta1">&theta;&#8321; (degrees)</label>
                             <input type="range" id="chaos-theta1" class="control-range" min="-180" max="180" value="120" step="1">
                             <span class="control-value mono" id="chaos-theta1-val">120</span>
-                            <label class="control-label" for="chaos-theta2">theta2 (deg)</label>
+                            <label class="control-label" for="chaos-theta2">&theta;&#8322; (degrees)</label>
                             <input type="range" id="chaos-theta2" class="control-range" min="-180" max="180" value="120" step="1">
                             <span class="control-value mono" id="chaos-theta2-val">120</span>
                             <label class="control-label" for="chaos-duration">duration (s)</label>
@@ -67,11 +70,31 @@
                     <div class="side-panel">
                         <div class="controls">
                             <h2 class="panel-heading">Controls</h2>
-                            <p class="placeholder-text">Projectile controls and live arc update ship in Phase 3C.</p>
+                            <label class="control-label" for="proj-planet">Planet (gravity m/s²)</label>
+                            <select id="proj-planet" class="control-select">
+                                <option value="9.81" selected>Earth — 9.81</option>
+                                <option value="1.62">Moon — 1.62</option>
+                                <option value="3.71">Mars — 3.71</option>
+                                <option value="24.79">Jupiter — 24.79</option>
+                            </select>
+                            <label class="control-label" for="proj-velocity">velocity (m/s)</label>
+                            <input type="range" id="proj-velocity" class="control-range" min="5" max="120" value="50" step="1">
+                            <span class="control-value mono" id="proj-velocity-val">50</span>
+                            <label class="control-label" for="proj-angle">angle (deg)</label>
+                            <input type="range" id="proj-angle" class="control-range" min="5" max="85" value="45" step="1">
+                            <span class="control-value mono" id="proj-angle-val">45</span>
+                            <label class="control-label" for="proj-height">height (m)</label>
+                            <input type="range" id="proj-height" class="control-range" min="0" max="50" value="0" step="0.5">
+                            <span class="control-value mono" id="proj-height-val">0</span>
                         </div>
                         <div class="output-panel">
-                            <div class="output-status mono">Phase 3C</div>
-                            <p class="context-block muted">Open the CHAOS LAB tab for the live demo, or return after the next phase for projectile, Doppler, and time dilation.</p>
+                            <div class="output-status mono" id="proj-status">Loading…</div>
+                            <div class="key-stats" id="proj-key-stats"></div>
+                            <p class="context-block" id="proj-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="proj-json"></pre>
+                            </details>
                         </div>
                     </div>
                 </div>
@@ -85,11 +108,27 @@
                     <div class="side-panel">
                         <div class="controls">
                             <h2 class="panel-heading">Controls</h2>
-                            <p class="placeholder-text">Doppler controls and wave animation ship in Phase 3C.</p>
+                            <label class="control-label" for="dop-medium">medium (wave speed m/s)</label>
+                            <select id="dop-medium" class="control-select">
+                                <option value="343" selected>Air — 343</option>
+                                <option value="1480">Water — 1480</option>
+                                <option value="5960">Steel — 5960</option>
+                            </select>
+                            <label class="control-label" for="dop-freq">source frequency (Hz)</label>
+                            <input type="range" id="dop-freq" class="control-range" min="100" max="880" value="440" step="10">
+                            <span class="control-value mono" id="dop-freq-val">440</span>
+                            <label class="control-label" for="dop-src-vel">source velocity (m/s)</label>
+                            <input type="range" id="dop-src-vel" class="control-range" min="-80" max="80" value="30" step="1">
+                            <span class="control-value mono" id="dop-src-vel-val">30</span>
                         </div>
                         <div class="output-panel">
-                            <div class="output-status mono">Phase 3C</div>
-                            <p class="context-block muted">Wave scene visualization will appear here.</p>
+                            <div class="output-status mono" id="dop-status">Loading…</div>
+                            <div class="key-stats" id="dop-key-stats"></div>
+                            <p class="context-block" id="dop-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="dop-json"></pre>
+                            </details>
                         </div>
                     </div>
                 </div>
@@ -103,11 +142,39 @@
                     <div class="side-panel">
                         <div class="controls">
                             <h2 class="panel-heading">Controls</h2>
-                            <p class="placeholder-text">Velocity slider and clock rendering ship in Phase 3C.</p>
+                            <fieldset class="mode-fieldset">
+                                <legend class="control-label mode-legend">Mode</legend>
+                                <label class="control-row compare-row">
+                                    <input type="radio" name="time-mode" id="time-mode-vel" value="velocity" checked>
+                                    <span>Velocity (special relativity)</span>
+                                </label>
+                                <label class="control-row compare-row">
+                                    <input type="radio" name="time-mode" id="time-mode-grav" value="gravity">
+                                    <span>Gravity (general relativity)</span>
+                                </label>
+                            </fieldset>
+                            <div id="time-vel-controls">
+                                <label class="control-label" for="time-beta">speed (fraction of c)</label>
+                                <input type="range" id="time-beta" class="control-range" min="0" max="999" value="500" step="1">
+                                <span class="control-value mono" id="time-beta-val">0.500</span>
+                            </div>
+                            <div id="time-grav-controls" class="time-grav-hidden">
+                                <label class="control-label" for="time-body">Gravitational environment</label>
+                                <select id="time-body" class="control-select">
+                                    <option value="-62600000" selected>Earth surface (tiny effect)</option>
+                                    <option value="-1.8e16">Neutron star surface</option>
+                                    <option value="-4.3e16">Near black hole horizon</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="output-panel">
-                            <div class="output-status mono">Phase 3C</div>
-                            <p class="context-block muted">Analog clocks and dilation output will appear here.</p>
+                            <div class="output-status mono" id="time-status">Loading…</div>
+                            <div class="key-stats" id="time-key-stats"></div>
+                            <p class="context-block" id="time-context"></p>
+                            <details class="json-details">
+                                <summary class="json-summary">Raw JSON response</summary>
+                                <pre class="json-pre mono" id="time-json"></pre>
+                            </details>
                         </div>
                     </div>
                 </div>
