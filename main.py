@@ -73,4 +73,4 @@ async def get_stats():
 
 @app.get("/playground", tags=["Playground"], summary="Interactive visual playground", include_in_schema=False)
 async def playground(request: Request):
-    return templates.TemplateResponse("playground.html", {"request": request})
+    return templates.TemplateResponse(request, "playground.html")
