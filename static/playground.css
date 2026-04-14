@@ -4,12 +4,23 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-primary: #7CB89A;
+    --color-accent-red: #ff6b6b;
+    --color-accent-amber: #ffb84d;
+    --color-bg: #1a1a1a;
+    --color-surface: #404040;
+    --color-fg: #f7f4ed;
+    --color-muted: #bfbfbf;
+    --color-border: rgba(124, 184, 154, 0.28);
+}
+
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: "Inter", system-ui, sans-serif;
-    background-color: #16130f;
-    color: #f7f1e8;
+    font-family: "Work Sans", system-ui, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
     line-height: 1.5;
 }
 
@@ -21,22 +32,23 @@ body {
 
 .app-header {
     margin-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(255, 160, 90, 0.22);
+    border-bottom: 1px solid var(--color-border);
     padding-bottom: 1rem;
 }
 
 .app-title {
     margin: 0;
+    font-family: "Syne", "Outfit", system-ui, sans-serif;
     font-size: 1.75rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.04em;
-    color: #ffb870;
+    color: var(--color-primary);
 }
 
 .app-tagline {
     margin: 0.35rem 0 0;
     font-size: 0.9rem;
-    color: #b8a99a;
+    color: var(--color-muted);
 }
 
 .tab-bar {
@@ -47,33 +59,34 @@ body {
 }
 
 .tab {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Outfit", system-ui, sans-serif;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     padding: 0.65rem 1rem;
-    border: 1px solid rgba(232, 122, 56, 0.35);
-    background: rgba(35, 28, 22, 0.92);
-    color: #c9bfb3;
+    border: 1px solid var(--color-border);
+    background: rgba(64, 64, 64, 0.35);
+    color: var(--color-muted);
     cursor: pointer;
     border-radius: 4px;
     transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .tab:hover {
-    color: #fff8f0;
-    border-color: rgba(255, 176, 112, 0.55);
+    color: var(--color-fg);
+    border-color: rgba(124, 184, 154, 0.65);
+    background: rgba(124, 184, 154, 0.12);
 }
 
 .tab:focus-visible {
-    outline: 2px solid #ff9f43;
+    outline: 2px solid var(--color-accent-amber);
     outline-offset: 2px;
 }
 
 .tab-active {
-    color: #fff8f0;
-    background: #e86a24;
-    border-color: #e86a24;
+    color: #0f1210;
+    background: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 .panels {
@@ -101,8 +114,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background: #0d0a08;
-    border: 1px solid rgba(255, 160, 90, 0.14);
+    background: #101010;
+    border: 1px solid rgba(124, 184, 154, 0.22);
     border-radius: 8px;
     padding: 0.75rem;
 }
@@ -140,7 +153,7 @@ body {
     max-width: 600px;
     height: auto;
     border-radius: 4px;
-    background: #0a0806;
+    background: #0f0f0f;
 }
 
 .side-panel {
@@ -152,24 +165,25 @@ body {
 }
 
 .controls {
-    background: rgba(28, 22, 18, 0.95);
-    border: 1px solid rgba(232, 122, 56, 0.18);
+    background: rgba(64, 64, 64, 0.26);
+    border: 1px solid rgba(124, 184, 154, 0.2);
     border-radius: 8px;
     padding: 1rem 1.1rem;
 }
 
 .panel-heading {
     margin: 0 0 0.75rem;
+    font-family: "Outfit", system-ui, sans-serif;
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.06em;
-    color: #ffb366;
+    color: var(--color-primary);
 }
 
 .control-label {
     display: block;
     font-size: 0.78rem;
-    color: #c4b8aa;
+    color: var(--color-muted);
     margin-top: 0.65rem;
     margin-bottom: 0.25rem;
 }
@@ -182,18 +196,18 @@ body {
     width: 100%;
     margin-top: 0.25rem;
     padding: 0.45rem 0.5rem;
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Work Sans", system-ui, sans-serif;
     font-size: 0.82rem;
-    color: #f7f1e8;
-    background: #0d0a08;
-    border: 1px solid rgba(255, 160, 90, 0.25);
+    color: var(--color-fg);
+    background: #252525;
+    border: 1px solid rgba(124, 184, 154, 0.35);
     border-radius: 4px;
 }
 
 .mode-fieldset {
     margin: 0 0 0.75rem;
     padding: 0.5rem 0.65rem;
-    border: 1px solid rgba(255, 160, 90, 0.15);
+    border: 1px solid rgba(124, 184, 154, 0.2);
     border-radius: 6px;
 }
 
@@ -208,14 +222,14 @@ body {
 
 .control-range {
     width: 100%;
-    accent-color: #e86a24;
+    accent-color: var(--color-primary);
 }
 
 .control-value {
     display: inline-block;
     margin-top: 0.2rem;
     font-size: 0.85rem;
-    color: #ffcc99;
+    color: var(--color-accent-amber);
 }
 
 .compare-row {
@@ -230,14 +244,14 @@ body {
 .compare-row input {
     width: 1rem;
     height: 1rem;
-    accent-color: #e85d04;
+    accent-color: var(--color-primary);
 }
 
 .btn-primary {
     margin-top: 1rem;
     width: 100%;
     padding: 0.65rem 1rem;
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Outfit", system-ui, sans-serif;
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -245,29 +259,29 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    color: #fff8f0;
-    background: #e86a24;
+    color: #0f1210;
+    background: var(--color-primary);
 }
 
 .btn-primary:hover {
-    background: #f07830;
+    background: #8bc4a6;
 }
 
 .btn-primary:focus-visible {
-    outline: 2px solid #ffb870;
+    outline: 2px solid var(--color-accent-amber);
     outline-offset: 2px;
 }
 
 .output-panel {
-    background: rgba(20, 16, 12, 0.98);
-    border: 1px solid rgba(255, 160, 90, 0.12);
+    background: rgba(16, 16, 16, 0.92);
+    border: 1px solid rgba(124, 184, 154, 0.16);
     border-radius: 8px;
     padding: 1rem 1.1rem;
 }
 
 .output-status {
     font-size: 0.78rem;
-    color: #ffaa66;
+    color: var(--color-accent-amber);
     margin-bottom: 0.65rem;
 }
 
@@ -282,31 +296,31 @@ body {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    background: rgba(232, 106, 36, 0.14);
-    border: 1px solid rgba(255, 176, 112, 0.28);
-    color: #ffd4b8;
+    background: rgba(124, 184, 154, 0.14);
+    border: 1px solid rgba(124, 184, 154, 0.3);
+    color: #d8f0e3;
 }
 
 .stat-pill .mono {
-    color: #ffe8cc;
+    color: var(--color-fg);
 }
 
 .context-block {
     font-size: 0.95rem;
     line-height: 1.55;
-    color: #ebe3d9;
+    color: var(--color-fg);
     margin: 0 0 0.75rem;
 }
 
 .context-block.muted {
-    color: #8a8078;
+    color: #9c9c9c;
     font-size: 0.88rem;
 }
 
 .placeholder-text {
     margin: 0;
     font-size: 0.82rem;
-    color: #8a8078;
+    color: #9c9c9c;
 }
 
 .json-details {
@@ -315,12 +329,12 @@ body {
 
 .json-summary {
     font-size: 0.78rem;
-    color: #b8a99a;
+    color: var(--color-muted);
     cursor: pointer;
 }
 
 .json-summary:hover {
-    color: #ffaa66;
+    color: var(--color-accent-red);
 }
 
 .json-pre {
@@ -330,12 +344,12 @@ body {
     overflow: auto;
     font-size: 0.68rem;
     line-height: 1.4;
-    background: #0d0a08;
-    border: 1px solid rgba(255, 160, 90, 0.1);
+    background: #101010;
+    border: 1px solid rgba(124, 184, 154, 0.12);
     border-radius: 4px;
     white-space: pre-wrap;
     word-break: break-all;
-    color: #e8d4b8;
+    color: #e5ece8;
 }
 
 .control-number {
@@ -344,9 +358,9 @@ body {
     padding: 0.45rem 0.5rem;
     font-family: "JetBrains Mono", ui-monospace, monospace;
     font-size: 0.82rem;
-    color: #f7f1e8;
-    background: #0d0a08;
-    border: 1px solid rgba(255, 160, 90, 0.25);
+    color: var(--color-fg);
+    background: #252525;
+    border: 1px solid rgba(124, 184, 154, 0.35);
     border-radius: 4px;
 }
 

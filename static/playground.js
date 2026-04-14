@@ -170,8 +170,8 @@
         var p0 = toScreen(0, 0, cw, ch), p1 = toScreen(b1.x, b1.y, cw, ch), p2 = toScreen(b2.x, b2.y, cw, ch);
         ctx.strokeStyle = "rgba(247,241,232,0.55)"; ctx.lineWidth = 3;
         ctx.beginPath(); ctx.moveTo(p0.sx, p0.sy); ctx.lineTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
-        ctx.fillStyle = "rgba(255,200,150,0.95)"; ctx.beginPath(); ctx.arc(p1.sx, p1.sy, 10, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = "rgba(255,140,80,0.98)"; ctx.beginPath(); ctx.arc(p2.sx, p2.sy, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(255,184,77,0.95)"; ctx.beginPath(); ctx.arc(p1.sx, p1.sy, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(124,184,154,0.98)"; ctx.beginPath(); ctx.arc(p2.sx, p2.sy, 10, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "rgba(247,241,232,0.9)"; ctx.beginPath(); ctx.arc(p0.sx, p0.sy, 4, 0, Math.PI * 2); ctx.fill();
     }
 
@@ -192,8 +192,8 @@
         var ctx = canvas.getContext("2d"), cw = canvas.width, ch = canvas.height;
         ctx.fillStyle = "#000000"; ctx.fillRect(0, 0, cw, ch);
         var idx = indexForTime(traj2, simT);
-        drawTrail(ctx, traj1, idx, [255, 184, 112], cw, ch);
-        drawTrail(ctx, traj2, idx, [255, 120, 64], cw, ch);
+        drawTrail(ctx, traj1, idx, [124, 184, 154], cw, ch);
+        drawTrail(ctx, traj2, idx, [255, 184, 77], cw, ch);
         drawPendulumState(ctx, cw, ch, traj1, traj2, idx);
         drawDivergenceLabel(ctx, cw, ch, divTime, simT, nowMs);
     }
@@ -341,7 +341,7 @@
 
         var planetVal = qs("proj-planet") ? qs("proj-planet").value : "9.81";
         var planetName = planetNames[planetVal] || planetVal;
-        ctx.fillStyle = "rgba(255,184,112,0.65)"; ctx.font = "bold 12px Inter, sans-serif"; ctx.textAlign = "right";
+        ctx.fillStyle = "rgba(255,184,77,0.72)"; ctx.font = "bold 12px Inter, sans-serif"; ctx.textAlign = "right";
         ctx.fillText(planetName + "  g = " + planetVal + " m/s\u00B2", cw - pad, pad - 8);
 
         ctx.fillStyle = "rgba(247,241,232,0.3)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "center";
@@ -356,15 +356,15 @@
         var drawUpTo = Math.min(Math.floor(progress * traj.length), traj.length - 1);
 
         ctx.save();
-        ctx.shadowColor = "rgba(255,180,90,0.5)"; ctx.shadowBlur = 12;
-        ctx.strokeStyle = "#ffaa44"; ctx.lineWidth = 3;
+        ctx.shadowColor = "rgba(255,184,77,0.45)"; ctx.shadowBlur = 12;
+        ctx.strokeStyle = "#ffb84d"; ctx.lineWidth = 3;
         ctx.beginPath(); ctx.moveTo(tr.tx(traj[0].x), tr.ty(traj[0].y));
         for (i = 1; i <= drawUpTo; i++) { ctx.lineTo(tr.tx(traj[i].x), tr.ty(traj[i].y)); }
         ctx.stroke();
         ctx.restore();
 
         if (drawUpTo < traj.length - 1) {
-            ctx.strokeStyle = "rgba(255,170,68,0.2)"; ctx.lineWidth = 2; ctx.setLineDash([4, 6]);
+            ctx.strokeStyle = "rgba(124,184,154,0.28)"; ctx.lineWidth = 2; ctx.setLineDash([4, 6]);
             ctx.beginPath(); ctx.moveTo(tr.tx(traj[drawUpTo].x), tr.ty(traj[drawUpTo].y));
             for (i = drawUpTo + 1; i < traj.length; i++) { ctx.lineTo(tr.tx(traj[i].x), tr.ty(traj[i].y)); }
             ctx.stroke(); ctx.setLineDash([]);
@@ -374,18 +374,18 @@
             ctx.strokeStyle = "rgba(247,241,232,0.35)"; ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(tr.tx(traj[peakI].x), tr.ty(traj[peakI].y)); ctx.lineTo(tr.tx(traj[peakI].x), tr.ty(0));
             ctx.stroke(); ctx.setLineDash([]);
-            ctx.fillStyle = "#ffb870"; ctx.beginPath(); ctx.arc(tr.tx(traj[peakI].x), tr.ty(traj[peakI].y), 4, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#7CB89A"; ctx.beginPath(); ctx.arc(tr.tx(traj[peakI].x), tr.ty(traj[peakI].y), 4, 0, Math.PI * 2); ctx.fill();
             ctx.fillStyle = "rgba(247,241,232,0.7)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "left";
             ctx.fillText("peak " + fmtNum(traj[peakI].y, 1) + " m", tr.tx(traj[peakI].x) + 8, tr.ty(traj[peakI].y) - 6);
         }
 
-        ctx.fillStyle = "#ffcc88"; ctx.beginPath(); ctx.arc(tr.tx(traj[0].x), tr.ty(traj[0].y), 5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#e2efe9"; ctx.beginPath(); ctx.arc(tr.tx(traj[0].x), tr.ty(traj[0].y), 5, 0, Math.PI * 2); ctx.fill();
 
         var cur = traj[drawUpTo];
-        ctx.fillStyle = "#e86a24"; ctx.beginPath(); ctx.arc(tr.tx(cur.x), tr.ty(cur.y), 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#ffb84d"; ctx.beginPath(); ctx.arc(tr.tx(cur.x), tr.ty(cur.y), 7, 0, Math.PI * 2); ctx.fill();
 
         if (drawUpTo >= traj.length - 1) {
-            ctx.strokeStyle = "#e86a24"; ctx.lineWidth = 2;
+            ctx.strokeStyle = "#ffb84d"; ctx.lineWidth = 2;
             ctx.beginPath(); ctx.arc(tr.tx(traj[traj.length - 1].x), tr.ty(traj[traj.length - 1].y), 9, 0, Math.PI * 2); ctx.stroke();
             ctx.fillStyle = "rgba(247,241,232,0.7)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "right";
             ctx.fillText(fmtNum(data.range, 1) + " m", tr.tx(traj[traj.length - 1].x) - 6, tr.ty(traj[traj.length - 1].y) - 10);
@@ -460,7 +460,7 @@
 
         ctx.fillStyle = "#0d0a08"; ctx.fillRect(0, 0, cw, ch);
 
-        ctx.strokeStyle = "rgba(255,180,120,0.25)"; ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(124,184,154,0.28)"; ctx.lineWidth = 1;
         ctx.setLineDash([4, 8]);
         ctx.beginPath(); ctx.moveTo(anim.observerX, 40); ctx.lineTo(anim.observerX, ch - 30); ctx.stroke();
         ctx.setLineDash([]);
@@ -473,29 +473,29 @@
             if (radius <= 0) continue;
             var age = anim.simTime - w.emitTime;
             var alpha = Math.max(0.05, 0.45 - age * 0.1);
-            ctx.strokeStyle = "rgba(255,180,120," + alpha + ")";
+            ctx.strokeStyle = "rgba(124,184,154," + alpha + ")";
             ctx.lineWidth = 1.5;
             ctx.beginPath(); ctx.arc(w.cx, cy, radius, 0, Math.PI * 2); ctx.stroke();
         }
 
-        ctx.fillStyle = "#ffb870"; ctx.beginPath(); ctx.arc(anim.sourceX, cy, 12, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#7CB89A"; ctx.beginPath(); ctx.arc(anim.sourceX, cy, 12, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "#0d0a08"; ctx.font = "bold 10px Inter, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.fillText("S", anim.sourceX, cy);
 
         if (anim.sourceVel > 0) {
-            ctx.fillStyle = "rgba(100,160,255,0.6)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "center";
+            ctx.fillStyle = "rgba(255,184,77,0.65)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "center";
             ctx.fillText("compressed", (anim.sourceX + cw) / 2, ch - 24);
-            ctx.fillStyle = "rgba(255,100,80,0.6)";
+            ctx.fillStyle = "rgba(255,107,107,0.6)";
             ctx.fillText("expanded", anim.sourceX / 2, ch - 24);
         } else if (anim.sourceVel < 0) {
-            ctx.fillStyle = "rgba(255,100,80,0.6)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "center";
+            ctx.fillStyle = "rgba(255,107,107,0.6)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "center";
             ctx.fillText("expanded", (anim.sourceX + cw) / 2, ch - 24);
-            ctx.fillStyle = "rgba(100,160,255,0.6)";
+            ctx.fillStyle = "rgba(255,184,77,0.65)";
             ctx.fillText("compressed", anim.sourceX / 2, ch - 24);
         }
 
         if (anim.effect) {
-            ctx.fillStyle = anim.effect === "blueshift" ? "rgba(100,160,255,0.85)" : anim.effect === "redshift" ? "rgba(255,100,80,0.85)" : "rgba(247,241,232,0.6)";
+            ctx.fillStyle = anim.effect === "blueshift" ? "rgba(124,184,154,0.85)" : anim.effect === "redshift" ? "rgba(255,107,107,0.85)" : "rgba(247,241,232,0.6)";
             ctx.font = "bold 13px JetBrains Mono, monospace"; ctx.textAlign = "center";
             ctx.fillText(anim.effect.toUpperCase(), cw / 2, 28);
         }
@@ -683,7 +683,7 @@
             var a2 = (i / 12) * 2 * Math.PI - Math.PI / 2;
             ctx.fillText(clockNums[i], cx + Math.cos(a2) * (r - 24), cy + Math.sin(a2) * (r - 24));
         }
-        ctx.fillStyle = "rgba(255,184,112,0.85)"; ctx.font = "12px Inter, sans-serif";
+        ctx.fillStyle = "rgba(255,184,77,0.9)"; ctx.font = "12px Inter, sans-serif";
         ctx.fillText(label, cx, cy - r - 14);
     }
 
@@ -697,10 +697,10 @@
         ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(hourA) * r * 0.48, cy + Math.sin(hourA) * r * 0.48); ctx.stroke();
         ctx.lineWidth = 2.5;
         ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(minuteA) * r * 0.7, cy + Math.sin(minuteA) * r * 0.7); ctx.stroke();
-        ctx.strokeStyle = "#e86a24"; ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "#ffb84d"; ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(secondA) * r * 0.8, cy + Math.sin(secondA) * r * 0.8); ctx.stroke();
         ctx.lineCap = "butt";
-        ctx.fillStyle = "#ffb870"; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#7CB89A"; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
     }
 
     function drawTimeCanvas() {
@@ -716,7 +716,7 @@
 
         var ratio = timeClock.rateR;
         var ratioLabel = ratio < 0.01 ? "near-frozen" : ratio < 0.5 ? (ratio * 100).toFixed(1) + "% speed" : ratio < 0.999 ? (ratio * 100).toFixed(2) + "% speed" : "~same rate";
-        ctx.fillStyle = "rgba(232,106,36,0.8)"; ctx.font = "bold 13px JetBrains Mono, monospace"; ctx.textAlign = "center";
+        ctx.fillStyle = "rgba(255,184,77,0.85)"; ctx.font = "bold 13px JetBrains Mono, monospace"; ctx.textAlign = "center";
         ctx.fillText(ratioLabel, c2x, cy + r + 30);
 
         ctx.fillStyle = "rgba(247,241,232,0.3)"; ctx.font = "10px JetBrains Mono, monospace";
@@ -765,7 +765,7 @@
         var totalH = items.length * (barH + gap);
         var startY = (ch - totalH) / 2 + 10;
 
-        ctx.fillStyle = "rgba(255,184,112,0.65)"; ctx.font = "bold 13px Inter, sans-serif"; ctx.textAlign = "center";
+        ctx.fillStyle = "rgba(255,184,77,0.72)"; ctx.font = "bold 13px Inter, sans-serif"; ctx.textAlign = "center";
         ctx.fillText("SPEED COMPARISON", cw / 2, 28);
 
         for (var i = 0; i < items.length; i++) {
@@ -774,12 +774,12 @@
             var barW = Math.max(3, (item.speed / maxSpeed) * barAreaW);
             var isHl = !!item.highlight;
 
-            ctx.fillStyle = isHl ? "rgba(255,184,112,0.8)" : "rgba(200,190,175,0.4)";
+            ctx.fillStyle = isHl ? "rgba(255,184,77,0.85)" : "rgba(200,190,175,0.4)";
             ctx.font = (isHl ? "bold " : "") + "11px Inter, sans-serif";
             ctx.textAlign = "right";
             ctx.fillText(item.label, labelW - 10, y + barH / 2 + 4);
 
-            ctx.fillStyle = isHl ? "rgba(232,106,36,0.85)" : "rgba(200,190,175,0.25)";
+            ctx.fillStyle = isHl ? "rgba(255,184,77,0.9)" : "rgba(200,190,175,0.25)";
             ctx.fillRect(labelW, y, barW, barH);
 
             ctx.fillStyle = isHl ? "#ffe8cc" : "rgba(247,241,232,0.45)";
@@ -867,8 +867,8 @@
         var y1 = pad + plotH + gapH;
         var y2 = pad + 2 * (plotH + gapH);
 
-        drawWave(y0, w1, maxAmp, "rgba(255,184,112,0.8)", "Wave 1 (f=" + f1 + ")");
-        drawWave(y1, w2, maxAmp, "rgba(255,120,64,0.8)", "Wave 2 (f=" + f2 + ")");
+        drawWave(y0, w1, maxAmp, "rgba(255,184,77,0.85)", "Wave 1 (f=" + f1 + ")");
+        drawWave(y1, w2, maxAmp, "rgba(255,184,77,0.82)", "Wave 2 (f=" + f2 + ")");
         drawWave(y2, wSum, maxAmp, "#f7f1e8", "Superposition");
 
         var supCy = y2 + plotH / 2;
@@ -1049,14 +1049,14 @@
             var lb = labels[i];
             var bx = startX + i * (boxW + gp);
             var isSolved = lb.key === solveFor;
-            ctx.strokeStyle = isSolved ? "#e86a24" : "rgba(255,160,90,0.2)";
+            ctx.strokeStyle = isSolved ? "#ffb84d" : "rgba(124,184,154,0.24)";
             ctx.lineWidth = isSolved ? 2 : 1;
             ctx.strokeRect(bx, boxY, boxW, boxH);
             if (isSolved) {
-                ctx.fillStyle = "rgba(232,106,36,0.1)";
+                ctx.fillStyle = "rgba(255,184,77,0.14)";
                 ctx.fillRect(bx, boxY, boxW, boxH);
             }
-            ctx.fillStyle = isSolved ? "#ffb870" : "rgba(247,241,232,0.5)";
+            ctx.fillStyle = isSolved ? "#7CB89A" : "rgba(247,241,232,0.5)";
             ctx.font = "bold 14px Inter, sans-serif"; ctx.textAlign = "center";
             ctx.fillText(lb.label, bx + boxW / 2, boxY + 20);
             ctx.fillStyle = isSolved ? "#ffe8cc" : "rgba(247,241,232,0.4)";
@@ -1070,7 +1070,7 @@
         var containerX = cw * 0.15, containerW = cw * 0.7;
         var containerY = 170, containerBotY = ch - 35;
         var containerH = containerBotY - containerY;
-        ctx.strokeStyle = "rgba(255,160,90,0.2)"; ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(124,184,154,0.24)"; ctx.lineWidth = 1.5;
         ctx.strokeRect(containerX, containerY, containerW, containerH);
 
         var vol = allVals.V || 0.0224;
@@ -1083,18 +1083,18 @@
         var temp = allVals.T || 273;
         var pressure = allVals.P || 101325;
         var wallGlow = Math.min(pressure / 200000, 1);
-        ctx.strokeStyle = "rgba(232,106,36," + (0.15 + wallGlow * 0.4) + ")"; ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(124,184,154," + (0.15 + wallGlow * 0.4) + ")"; ctx.lineWidth = 2;
         ctx.strokeRect(containerX, pistonY, containerW, containerBotY - pistonY);
 
-        ctx.fillStyle = "rgba(255,184,112,0.45)"; ctx.fillRect(containerX - 2, pistonY - 4, containerW + 4, 8);
-        ctx.fillStyle = "rgba(255,184,112,0.6)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "left";
+        ctx.fillStyle = "rgba(255,184,77,0.45)"; ctx.fillRect(containerX - 2, pistonY - 4, containerW + 4, 8);
+        ctx.fillStyle = "rgba(255,184,77,0.65)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "left";
         ctx.fillText("\u25b2 piston", containerX + containerW + 8, pistonY + 4);
 
         var particles = gs.particles;
         var tempColor;
-        if (temp < 200) { tempColor = [100, 150, 255]; }
-        else if (temp < 500) { var t01 = (temp - 200) / 300; tempColor = [Math.floor(100 + 155 * t01), Math.floor(150 + 30 * t01), Math.floor(255 - 135 * t01)]; }
-        else { tempColor = [255, 100, 80]; }
+        if (temp < 200) { tempColor = [124, 184, 154]; }
+        else if (temp < 500) { var t01 = (temp - 200) / 300; tempColor = [Math.floor(124 + 131 * t01), Math.floor(184 + 0 * t01), Math.floor(154 - 77 * t01)]; }
+        else { tempColor = [255, 184, 77]; }
 
         for (i = 0; i < particles.length; i++) {
             var p = particles[i];
@@ -1107,7 +1107,7 @@
 
         var pulse = 0.5 + 0.5 * Math.sin(nowMs / 300);
         if (wallGlow > 0.3) {
-            ctx.fillStyle = "rgba(232,106,36," + (wallGlow * 0.08 * pulse) + ")";
+            ctx.fillStyle = "rgba(255,107,107," + (wallGlow * 0.08 * pulse) + ")";
             ctx.fillRect(containerX + 1, pistonY + 1, containerW - 2, containerBotY - pistonY - 2);
         }
 
@@ -1257,21 +1257,21 @@
             phaseLabel = "AFTER";
         }
 
-        ctx.fillStyle = "rgba(255,184,112,0.5)"; ctx.font = "bold 12px Inter, sans-serif"; ctx.textAlign = "center";
+        ctx.fillStyle = "rgba(255,184,77,0.55)"; ctx.font = "bold 12px Inter, sans-serif"; ctx.textAlign = "center";
         ctx.fillText(phaseLabel, cw / 2, 26);
 
         if (progress >= 0.4 && progress < 0.5) {
             var flash = 1 - (progress - 0.4) / 0.1;
-            ctx.fillStyle = "rgba(255,200,120," + (flash * 0.3) + ")";
+            ctx.fillStyle = "rgba(255,107,107," + (flash * 0.3) + ")";
             ctx.beginPath(); ctx.arc(collisionX, cy, 40 + flash * 30, 0, Math.PI * 2); ctx.fill();
         }
 
-        ctx.fillStyle = "rgba(255,184,112,0.85)";
+        ctx.fillStyle = "rgba(255,184,77,0.9)";
         ctx.beginPath(); ctx.arc(x1, cy, r1, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "#0d0a08"; ctx.font = "bold 10px Inter, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.fillText(anim.m1 + "kg", x1, cy);
 
-        ctx.fillStyle = "rgba(255,120,64,0.85)";
+        ctx.fillStyle = "rgba(255,184,77,0.85)";
         ctx.beginPath(); ctx.arc(x2, cy, r2, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "#0d0a08";
         ctx.fillText(anim.m2 + "kg", x2, cy);
@@ -1291,19 +1291,19 @@
             ctx.fillText(fmtNum(vx, 1) + " m/s", (sX + eX) / 2, ay - 12);
         }
 
-        drawArrow(x1, cy, v1Arrow, r1, "rgba(255,184,112,0.7)");
-        drawArrow(x2, cy, v2Arrow, r2, "rgba(255,120,64,0.7)");
+        drawArrow(x1, cy, v1Arrow, r1, "rgba(124,184,154,0.7)");
+        drawArrow(x2, cy, v2Arrow, r2, "rgba(255,184,77,0.7)");
 
         if (anim.keBefore > 0) {
             var barY = ch - 80, barMaxW = cw - 100, barH = 14;
             ctx.fillStyle = "rgba(247,241,232,0.4)"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "left";
             ctx.fillText("KE before: " + fmtNum(anim.keBefore, 2) + " J", 10, barY - 4);
-            ctx.fillStyle = "rgba(255,184,112,0.3)";
+            ctx.fillStyle = "rgba(255,184,77,0.3)";
             ctx.fillRect(10, barY, barMaxW, barH);
 
             var afterW = Math.max(1, (anim.keAfter / anim.keBefore) * barMaxW);
             ctx.fillText("KE after:   " + fmtNum(anim.keAfter, 2) + " J", 10, barY + barH + 18);
-            ctx.fillStyle = anim.energyLost > 0.001 ? "rgba(232,106,36,0.5)" : "rgba(100,220,100,0.4)";
+            ctx.fillStyle = anim.energyLost > 0.001 ? "rgba(255,184,77,0.55)" : "rgba(124,184,154,0.45)";
             ctx.fillRect(10, barY + barH + 22, afterW, barH);
 
             if (anim.energyLost > 0.001) {
